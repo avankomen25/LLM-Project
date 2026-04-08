@@ -1,0 +1,14 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cmc-csci040-andrewvankomen"
+version = "0.1.0"
+dependencies = [
+    "groq",
+    "python-dotenv",
+]
+
+[project.scripts]
+chat = "chat:repl"
