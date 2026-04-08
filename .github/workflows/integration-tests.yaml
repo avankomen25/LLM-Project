@@ -8,7 +8,7 @@ jobs:
 
     steps:
       - name: Install package from PyPI
-        run: pip install cmc-csci040-andrewvankomen==0.1.2
+        run: pip install cmc-csci040-andrewvankomen==0.1.3
 
       - name: Run integration test
         env:
