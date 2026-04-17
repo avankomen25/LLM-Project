@@ -28,8 +28,8 @@ class Chat:
     Supports automatic tool calling via the LLM and manual slash commands.
 
     >>> chat = Chat()
-    >>> chat.send_message('my name is bob', temperature=0.0)
-    "I don't have any information about you, but I can chat with you. What would you like to talk about?"
+    >>> chat.send_message('Hi, my name is Bob', temperature=0.0)
+    "Hello Bob, it's nice to meet you. I'm here to help with any questions or tasks you'd like to accomplish using the available functions. What would you like to do first?"
     >>> def monkey_input(prompt, user_inputs=['Hello, I am monkey.', 'Goodbye.']):
     ...     try:
     ...         user_input = user_inputs.pop(0)
@@ -41,9 +41,9 @@ class Chat:
     >>> builtins.input = monkey_input
     >>> repl(temperature=0.0)
     chat> Hello, I am monkey.
-    Hello monkey, it's nice to meet you. What would you like to do today?
+    Hello monkey, it's nice to meet you. I can help you with some tasks using the available functions. What would you like to do?
     chat> Goodbye.
-    Goodbye monkey. It was nice chatting with you.
+    It was nice chatting with you, monkey. Have a great day.
     <BLANKLINE>
     '''
     client = Groq()
@@ -52,7 +52,12 @@ class Chat:
         self.messages = [
             {
                 'role': 'system',
-                'content': 'Write the output in 1-2 sentences.'
+                'content': (
+                    'Write the output in 1-2 sentences. '
+                    'You are a helpful assistant that can read files in the current directory. '
+                    'You ONLY have access to these four tools: calculate, ls, cat, grep. '
+                    'Do not use any other tools.'
+                )
             },
         ]
 
@@ -73,7 +78,7 @@ class Chat:
                 for tool_call in choice.message.tool_calls:
                     name = tool_call.function.name
                     import json
-                    args = json.loads(tool_call.function.arguments)
+                    args = json.loads(tool_call.function.arguments or '{}') or {}
                     result = TOOL_MAP[name](**args)
                     self.messages.append({
                         'role': 'tool',
