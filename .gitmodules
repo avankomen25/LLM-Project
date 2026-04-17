@@ -1,9 +1,9 @@
-[submodule "test_projects/test_projects/markdown_compiler"]
-	path = test_projects/test_projects/markdown_compiler
-	url = https://github.com/avankomen25/AndrewVanKomen-Markdown-Compiler
-[submodule "test_projects/test_projects/ebay_scraper"]
-	path = test_projects/test_projects/ebay_scraper
+[submodule "test_projects/ebay_scraper"]
+	path = test_projects/ebay_scraper
 	url = https://github.com/avankomen25/Project-2-Ebay
-[submodule "test_projects/test_projects/webpage"]
-	path = test_projects/test_projects/webpage
+[submodule "test_projects/markdown_compiler"]
+	path = test_projects/markdown_compiler
+	url = https://github.com/avankomen25/AndrewVanKomen-Markdown-Compiler
+[submodule "test_projects/webpage"]
+	path = test_projects/webpage
 	url = https://github.com/avankomen25/avankomen25.github.io
