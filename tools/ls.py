@@ -1,28 +1,29 @@
 """Tool definition and implementation for listing files in a directory."""
-
+import os
 import glob
 from tools.utils import is_path_safe
 
 
 def ls(path='.'):
-    """
-    List files in a directory, sorted asciibetically.
+    """List files in a directory, sorted asciibetically.
 
-    >>> import os
+    >>> import os, shutil
     >>> os.makedirs('_test_ls_dir', exist_ok=True)
     >>> ls('_test_ls_dir')
     ''
-    >>> ls('.')  # doctest: +ELLIPSIS
-    '...'
     >>> ls('/etc')
     'Error: unsafe path'
-    >>> import shutil
+    >>> with open('_test_ls_dir/banana.txt', 'w') as f: _ = f.write('hi')
+    >>> with open('_test_ls_dir/apple.txt', 'w') as f: _ = f.write('hi')
+    >>> with open('_test_ls_dir/cherry.txt', 'w') as f: _ = f.write('hi')
+    >>> ls('_test_ls_dir') == 'apple.txt\\nbanana.txt\\ncherry.txt'
+    True
     >>> shutil.rmtree('_test_ls_dir')
     """
     if not is_path_safe(path):
         return 'Error: unsafe path'
     files = sorted(glob.glob(f'{path}/*'))
-    return '\n'.join(f.split('/')[-1] for f in files)
+    return '\n'.join(os.path.basename(f) for f in files)
 
 
 tool_definition = {
