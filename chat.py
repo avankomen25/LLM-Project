@@ -55,6 +55,24 @@ class Chat:
     chat> Goodbye.
     Goodbye! Feel free to return if you have any more questions.
     <BLANKLINE>
+    >>> chat_openai = Chat(provider='openai')
+    >>> chat_openai.model
+    'openai/gpt-4o'
+    >>> def monkey_input(prompt, user_inputs=['/ls .', 'Goodbye.']):
+    ...     try:
+    ...         user_input = user_inputs.pop(0)
+    ...         print(f'{prompt}{user_input}')
+    ...         return user_input
+    ...     except IndexError:
+    ...         raise KeyboardInterrupt
+    >>> import builtins
+    >>> builtins.input = monkey_input
+    >>> repl(temperature=0.0)  
+    chat> /ls .
+    ...
+    chat> Goodbye.
+    ...
+    <BLANKLINE>
     '''
 
     def __init__(self, provider='groq'):
