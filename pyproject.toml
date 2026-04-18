@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cmc-csci040-andrewvankomen"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
     "groq",
     "openai",
@@ -17,3 +17,4 @@ chat = "chat:main"
 
 [tool.setuptools]
 py-modules = ["chat"]
+packages = ["tools"]
