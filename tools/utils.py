@@ -1,4 +1,4 @@
-"""Utility functions shared across tools."""
+"""Utility functions shared across tools to block access to all files."""
 
 
 def is_path_safe(path):

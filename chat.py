@@ -82,8 +82,8 @@ class Chat:
 
     def send_message(self, message, temperature=0.8):
         """Send a message and return the assistant response, handling tool calls if needed."""
+        self.messages = self.messages[:1] + self.messages[-10:]  # I want to trim history to avoid hitting token limits
         self.messages.append({'role': 'user', 'content': message})
-        self.messages = self.messages[:1] + self.messages[-10:]
         while True:
             chat_completion = self.client.chat.completions.create(
                 messages=self.messages,
@@ -102,6 +102,7 @@ class Chat:
                     self.messages.append({
                         'role': 'tool',
                         'tool_call_id': tool_call.id,
+                        'name': name,
                         'content': result,
                     })
             else:
@@ -150,8 +151,13 @@ def repl(temperature=0.8, provider='groq'):
         print()
 
 
-if __name__ == '__main__':
+def main():
+    """Entry point for the chat CLI."""
     parser = argparse.ArgumentParser()
     parser.add_argument('--provider', default='groq', choices=PROVIDER_MODELS.keys())
     args = parser.parse_args()
     repl(provider=args.provider)
+
+
+if __name__ == '__main__':
+    main()
