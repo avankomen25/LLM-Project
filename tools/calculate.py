@@ -11,6 +11,8 @@ def calculate(expression):
     '30'
     >>> calculate('not valid')
     'Error: invalid expression'
+    >>> calculate('2 ** 8')
+    '256'
     """
     try:
         result = eval(expression, {"__builtins__": {}}, {})
