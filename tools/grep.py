@@ -9,6 +9,7 @@ def grep(pattern, path):
     """
     Search for lines matching a regex pattern across files matching a glob path.
 
+    # don't create files
     >>> import os
     >>> with open('_test_grep.txt', 'w') as f:
     ...     _ = f.write('hello world\\nfoo bar\\nhello again')

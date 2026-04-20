@@ -7,6 +7,11 @@ def cat(path):
     """
     Return the contents of a file as a string.
 
+    # these are very ugly test cases;
+    # you should actually just have a file somewhere that already exists in the repo
+    # and cat that file;
+    # in general, test cases should be "side effect free" which means
+    # they shouldn't be creating new files on the filesystem
     >>> import os
     >>> with open('_test_cat.txt', 'w') as f:
     ...     _ = f.write('hello world')
