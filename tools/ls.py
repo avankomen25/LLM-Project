@@ -7,6 +7,7 @@ from tools.utils import is_path_safe
 def ls(path='.'):
     """List files in a directory, sorted asciibetically.
 
+    # again, don't create files/folders in the test cases
     >>> import os, shutil
     >>> os.makedirs('_test_ls_dir', exist_ok=True)
     >>> ls('_test_ls_dir')
@@ -17,7 +18,7 @@ def ls(path='.'):
     >>> with open('_test_ls_dir/apple.txt', 'w') as f: _ = f.write('hi')
     >>> with open('_test_ls_dir/cherry.txt', 'w') as f: _ = f.write('hi')
     >>> ls('_test_ls_dir') == 'apple.txt\\nbanana.txt\\ncherry.txt'
-    True
+    test cases should actually list the result
     >>> shutil.rmtree('_test_ls_dir')
     """
     if not is_path_safe(path):

@@ -6,7 +6,8 @@ import argparse
 
 from groq import Groq
 from dotenv import load_dotenv
-from openai import OpenAI
+# there's no need for both the openai and groq import;
+# they both have the same code inside, and so you should only need one
 
 from tools.calculate import calculate, tool_definition as calculate_def
 from tools.ls import ls, tool_definition as ls_def
@@ -40,39 +41,13 @@ class Chat:
     >>> chat = Chat()
     >>> chat.send_message('Hello!', temperature=0.0)
     'Hello! How can I help you with your code today?'
-    >>> def monkey_input(prompt, user_inputs=['Hello, I am monkey.', 'Goodbye.']):
-    ...     try:
-    ...         user_input = user_inputs.pop(0)
-    ...         print(f'{prompt}{user_input}')
-    ...         return user_input
-    ...     except IndexError:
-    ...         raise KeyboardInterrupt
-    >>> import builtins
-    >>> builtins.input = monkey_input
-    >>> repl(temperature=0.0)
-    chat> Hello, I am monkey.
-    Hello, monkey! How can I help you today?
-    chat> Goodbye.
-    Goodbye! Feel free to return if you have any more questions.
-    <BLANKLINE>
+
+    # the repl tests should be in the repl function
+
+    # this isn't a super exciting test
     >>> chat_openai = Chat(provider='openai')
     >>> chat_openai.model
     'openai/gpt-4o'
-    >>> def monkey_input(prompt, user_inputs=['/ls .', 'Goodbye.']):
-    ...     try:
-    ...         user_input = user_inputs.pop(0)
-    ...         print(f'{prompt}{user_input}')
-    ...         return user_input
-    ...     except IndexError:
-    ...         raise KeyboardInterrupt
-    >>> import builtins
-    >>> builtins.input = monkey_input
-    >>> repl(temperature=0.0)
-    chat> /ls .
-    ...
-    chat> Goodbye.
-    ...
-    <BLANKLINE>
     '''
 
     def __init__(self, provider='groq'):
@@ -80,7 +55,7 @@ class Chat:
         if provider == 'groq':
             self.client = Groq()
         else:
-            self.client = OpenAI(
+            self.client = Groq(
                 base_url='https://openrouter.ai/api/v1',
                 api_key=os.environ.get('OPENROUTER_API_KEY'),
             )
@@ -102,6 +77,15 @@ class Chat:
         """Send a message and return the assistant response, handling tool calls if needed."""
         self.messages = self.messages[:1] + self.messages[-10:]
         self.messages.append({'role': 'user', 'content': message})
+        # this is dangerous, especially since you are using the openrouter;
+        # if one of the AIs gets into a buggy loop where it always wants to use
+        # a tool call no matter what, it will instantly deplete all your tokens
+        # (you probably only have like $10 or some small amount,
+        # but you could imagine a real company would need to have 10s of thousands in their account,
+        # and all that would be gone instantly)
+        # it is customary to make this a for loop so that termination is guaranteed
+        # (I won't give you the provider ec this time due to this bug,
+        # but if you fix the problem I'll give it to you on the next submission)
         while True:
             try:
                 chat_completion = self.client.chat.completions.create(
@@ -137,9 +121,10 @@ def run_slash_command(chat, user_input):
     Run a slash command manually and add the output to the chat context.
 
     >>> chat = Chat()
-    >>> output = run_slash_command(chat, '/ls .')
-    >>> 'chat.py' in output
-    True
+    >>> run_slash_command(chat, '/ls .')
+    you should actually list the files here;
+    there are no problems with determinism,
+    and the purpose of a doctest is to actually show the output
     >>> run_slash_command(chat, '/cat /etc/passwd')
     'Error: unsafe path'
     >>> run_slash_command(chat, '/unknowncmd')
@@ -157,7 +142,10 @@ def run_slash_command(chat, user_input):
 
 
 def repl(temperature=0.8, provider='groq'):
-    """Run the interactive chat REPL, supporting both messages and slash commands."""
+    """Run the interactive chat REPL, supporting both messages and slash commands.
+
+    The repl tests should be here.
+    """
     import readline  # noqa: F401
     chat = Chat(provider=provider)
     try:
