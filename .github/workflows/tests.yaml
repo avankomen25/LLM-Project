@@ -15,7 +15,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install pytest pytest-cov coverage groq python-dotenv openai
+        run: pip install pytest pytest-cov coverage groq python-dotenv openai gitpython
 
       - name: Run doctests with coverage
         env:

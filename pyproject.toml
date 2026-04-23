@@ -8,6 +8,7 @@ version = "0.1.9"
 dependencies = [
     "groq",
     "python-dotenv",
+    "gitpython",
 ]
 readme = "README.md"
 

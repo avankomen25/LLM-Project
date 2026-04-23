@@ -10,14 +10,13 @@ def rm(path):
     '''
     Delete files matching a glob pattern and commit the deletion to git.
 
-    >>> write_result = __import__('tools.write_file', fromlist=['write_file']).write_file('test_files/to_delete.txt', 'bye', 'add delete test file')
+    >>> from tools.write_file import write_file
+    >>> _ = write_file('test_files/to_delete.txt', 'bye', 'add delete test file')
     >>> rm('test_files/to_delete.txt')
     'Deleted and committed: test_files/to_delete.txt'
     >>> import os
     >>> os.path.exists('test_files/to_delete.txt')
     False
-
-    Does not support absolute paths or directory traversal.
     >>> rm('/etc/passwd')
     'Error: unsafe path'
     >>> rm('../secret')

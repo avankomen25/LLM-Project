@@ -3,7 +3,6 @@
 import os   # noqa: F401
 import json
 import argparse
-import sys
 
 from groq import Groq
 from dotenv import load_dotenv
@@ -53,7 +52,7 @@ class Chat:
     def __init__(self, provider='groq'):
         """
         Initialize the chat client with the specified provider.
-        
+
         Checking if provider is working
         >>> chat_openai = Chat(provider='openai')
         >>> print(chat_openai.model)

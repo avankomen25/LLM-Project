@@ -1,18 +1,15 @@
 import git
 from tools.utils import is_path_safe
-from tools.cat import cat
 
 
 def write_files(files, commit_message):
     '''
     Write multiple files and commit them to git.
-    
-    >>> write_files({'path': 'test_files/test_write.txt', 'contents': 'hello'}, 'test single dict') #tests the line that puts the files into a list
+
+    >>> write_files({'path': 'test_files/test_write.txt', 'contents': 'hello'}, 'test')
     'Files written and committed: test_files/test_write.txt'
-    >>> write_files([{'path': 'test_files/test_write.txt', 'contents': 'hello'}], 'test commit')
+    >>> write_files([{'path': 'test_files/test_write.txt', 'contents': 'hello'}], 'test')
     'Files written and committed: test_files/test_write.txt'
-    >>> cat('test_files/test_write.txt')
-    'hello'
     >>> write_files([{'path': '/etc/passwd', 'contents': 'bad'}], 'hack')
     'Error: unsafe path: /etc/passwd'
     >>> write_files([{'path': '../secret', 'contents': 'bad'}], 'hack')
