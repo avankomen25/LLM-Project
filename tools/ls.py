@@ -16,9 +16,13 @@ def ls(path='.'):
     __pycache__
     calculate.py
     cat.py
+    doctests.py
     grep.py
     ls.py
+    rm.py
     utils.py
+    write_file.py
+    write_files.py
     """
     if not is_path_safe(path):
         return 'Error: unsafe path'

@@ -10,6 +10,7 @@ def cat(path):
     >>> print(cat('requirements.txt'))
     groq
     python-dotenv
+    gitpython
     <BLANKLINE>
     >>> cat('_nonexistent_file.txt')
     'Error: file not found'

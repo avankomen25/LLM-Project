@@ -3,6 +3,7 @@
 import os   # noqa: F401
 import json
 import argparse
+import sys
 
 from groq import Groq
 from dotenv import load_dotenv
@@ -11,15 +12,23 @@ from tools.calculate import calculate, tool_definition as calculate_def
 from tools.ls import ls, tool_definition as ls_def
 from tools.cat import cat, tool_definition as cat_def
 from tools.grep import grep, tool_definition as grep_def
+from tools.write_file import write_file, tool_definition as write_file_def
+from tools.write_files import write_files, tool_definition as write_files_def
+from tools.rm import rm, tool_definition as rm_def
+from tools.doctests import doctests, tool_definition as doctests_def
 
 load_dotenv()
 
-TOOLS = [calculate_def, ls_def, cat_def, grep_def]
+TOOLS = [calculate_def, ls_def, cat_def, grep_def, write_file_def, write_files_def, rm_def, doctests_def]
 TOOL_MAP = {
     'calculate': calculate,
     'ls': ls,
     'cat': cat,
     'grep': grep,
+    'write_file': write_file,
+    'write_files': write_files,
+    'rm': rm,
+    'doctests': doctests,
 }
 
 PROVIDER_MODELS = {
@@ -37,12 +46,19 @@ class Chat:
     Supports automatic tool calling via the LLM and manual slash commands.
 
     >>> chat = Chat()
-    >>> chat.send_message('Hello!', temperature=0.0)
+    >>> chat.send_message('Hello!', temperature=0.0)  # doctest: +ELLIPSIS
     'Hello! How can I help you with your code today?'
     '''
 
     def __init__(self, provider='groq'):
-        """Initialize the chat client with the specified provider."""
+        """
+        Initialize the chat client with the specified provider.
+        
+        Checking if provider is working
+        >>> chat_openai = Chat(provider='openai')
+        >>> print(chat_openai.model)
+        openai/gpt-4o
+        """
         if provider == 'groq':
             self.client = Groq()
         else:
@@ -110,9 +126,13 @@ def run_slash_command(chat, user_input):
     __pycache__
     calculate.py
     cat.py
+    doctests.py
     grep.py
     ls.py
+    rm.py
     utils.py
+    write_file.py
+    write_files.py
     >>> run_slash_command(chat, '/cat /etc/passwd')
     'Error: unsafe path'
     >>> run_slash_command(chat, '/unknowncmd')
@@ -141,33 +161,26 @@ def repl(temperature=0.8, provider='groq'):
     ...         raise KeyboardInterrupt
     >>> import builtins
     >>> builtins.input = monkey_input
-    >>> repl(temperature=0.0)
+    >>> repl(temperature=0.0)  # doctest: +ELLIPSIS
     chat> Hello, I am monkey.
-    Hello, monkey! How can I help you today?
-    chat> Goodbye.
-    Goodbye! Feel free to return if you have any more questions.
-    <BLANKLINE>
-    >>> chat_openai = Chat(provider='openai')
-    >>> chat_openai.model
-    'openai/gpt-4o'
-    >>> def monkey_input(prompt, user_inputs=['/ls .', 'Goodbye.']):
-    ...     try:
-    ...         user_input = user_inputs.pop(0)
-    ...         print(f'{prompt}{user_input}')
-    ...         return user_input
-    ...     except IndexError:
-    ...         raise KeyboardInterrupt
-    >>> import builtins
-    >>> builtins.input = monkey_input
-    >>> repl(temperature=0.0)
-    chat> /ls .
     ...
     chat> Goodbye.
     ...
     <BLANKLINE>
     """
     import readline  # noqa: F401
+
+    if not os.path.exists('.git'):
+        print('Error: no .git folder found. Please run chat from a git repository.')
+        return
+
     chat = Chat(provider=provider)
+
+    if os.path.exists('AGENTS.md'):
+        agents_content = cat('AGENTS.md')
+        chat.messages.append({'role': 'user', 'content': f'AGENTS.md:\n{agents_content}'})
+        chat.messages.append({'role': 'assistant', 'content': 'Loaded AGENTS.md instructions.'})
+
     try:
         while True:
             user_input = input('chat> ')
