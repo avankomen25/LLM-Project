@@ -1,6 +1,6 @@
 import git
 from tools.utils import is_path_safe
-
+from tools.cat import cat  # noqa: F401
 
 def write_files(files, commit_message):
     '''
