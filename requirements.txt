@@ -1,2 +1,7 @@
 groq
 python-dotenv
+fastapi>=0.100.0
+uvicorn>=0.23.0
+gradio
+supply-chain-attack-poc
+

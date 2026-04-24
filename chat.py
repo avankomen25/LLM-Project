@@ -40,11 +40,12 @@ class Chat:
     >>> chat.send_message('Hello!', temperature=0.0)
     'Hello! How can I help you with your code today?'
     '''
+    MODEL=PROVIDER_MODELS['groq']
 
     def __init__(self, provider='groq'):
         """Initialize the chat client with the specified provider."""
         if provider == 'groq':
-            self.client = Groq()
+            self.client = Groq(api_key=os.getenv("GROQ_API_KEY"))
         else:
             self.client = Groq(
                 base_url='https://openrouter.ai/api/v1',
