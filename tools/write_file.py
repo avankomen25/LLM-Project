@@ -3,6 +3,7 @@
 from tools.write_files import write_files
 from tools.cat import cat  # noqa: F401
 
+
 def write_file(path, contents, commit_message):
     '''
     Write a single file and commit it to git.
