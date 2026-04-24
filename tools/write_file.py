@@ -10,8 +10,13 @@ def write_file(path, contents, commit_message):
 
     >>> write_file('test_files/test_write.txt', 'hello again', 'test single write')
     'Files written and committed: test_files/test_write.txt'
+    >>> from tools.cat import cat
     >>> cat('test_files/test_write.txt')
     'hello again'
+    >>> write_file('test_files/test_write.txt', 'goodbye world', 'update test file')
+    'Files written and committed: test_files/test_write.txt'
+    >>> cat('test_files/test_write.txt')
+    'goodbye world'
     >>> write_file('/etc/passwd', 'bad', 'hack')
     'Error: unsafe path: /etc/passwd'
     '''

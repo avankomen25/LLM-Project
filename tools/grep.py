@@ -3,6 +3,7 @@
 import re
 import glob
 from tools.utils import is_path_safe
+import os
 
 
 def grep(pattern, path):
@@ -15,17 +16,15 @@ def grep(pattern, path):
     ''
     >>> grep('hello', '/etc/passwd')
     'Error: unsafe path'
-    >>> import os
-    >>> with open('_test_binary.bin', 'wb') as f:
-    ...     _ = f.write(bytes([0xff, 0xfe]))
-    >>> grep('hello', '_test_binary.bin')
+    >>> grep('hello', 'llmdemo.gif')
     ''
-    >>> os.remove('_test_binary.bin')
     """
     if not is_path_safe(path):
         return 'Error: unsafe path'
     matches = []
     for filepath in glob.glob(path):
+        if os.path.isdir(filepath):
+            continue
         try:
             with open(filepath, 'r', encoding='utf-8') as f:
                 for line in f:

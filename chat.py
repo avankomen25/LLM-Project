@@ -5,6 +5,7 @@ import json
 import argparse
 
 from groq import Groq
+from openai import OpenAI  # I couldn't get the provder tag to  work through Groq
 from dotenv import load_dotenv
 
 from tools.calculate import calculate, tool_definition as calculate_def
@@ -33,7 +34,7 @@ TOOL_MAP = {
 PROVIDER_MODELS = {
     'groq': 'openai/gpt-oss-120b',
     'openai': 'openai/gpt-4o',
-    'anthropic': 'anthropic/claude-opus-4-6',
+    'anthropic': 'anthropic/claude-opus-4',
     'google': 'google/gemini-2.0-flash',
 }
 
@@ -61,7 +62,7 @@ class Chat:
         if provider == 'groq':
             self.client = Groq()
         else:
-            self.client = Groq(
+            self.client = OpenAI(
                 base_url='https://openrouter.ai/api/v1',
                 api_key=os.environ.get('OPENROUTER_API_KEY'),
             )

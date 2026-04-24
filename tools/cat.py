@@ -10,17 +10,15 @@ def cat(path):
     >>> print(cat('requirements.txt'))
     groq
     python-dotenv
+    openai
     gitpython
     <BLANKLINE>
     >>> cat('_nonexistent_file.txt')
     'Error: file not found'
     >>> cat('/etc/passwd')
     'Error: unsafe path'
-    >>> import os
-    >>> os.makedirs('_test_dir', exist_ok=True)
-    >>> cat('_test_dir')
+    >>> cat('test_projects')
     'Error: path is a directory, not a file'
-    >>> os.rmdir('_test_dir')
     >>> cat('llmdemo.gif')
     'Error: cannot decode file'
     """

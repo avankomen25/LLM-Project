@@ -6,7 +6,7 @@
 [![codecov](https://codecov.io/github/avankomen25/LLM-Project/graph/badge.svg?token=K97YWXIYUX)](https://codecov.io/github/avankomen25/LLM-Project)
 [![PyPI](https://img.shields.io/pypi/v/cmc-csci040-andrewvankomen)](https://pypi.org/project/cmc-csci040-andrewvankomen/)
 
-A command-line AI chat tool that lets you have conversations with your codebase. Point it at any project and ask questions. It can read files, search for patterns, and list directories automatically.
+A command-line AI chat tool that lets you have conversations with your codebase. Point it at any project and ask questions. It can read files, search for patterns, list directories, and write files automatically.
 
 ![Demo](https://raw.githubusercontent.com/avankomen25/LLM-Project/master/llmdemo.gif)
 
@@ -60,4 +60,64 @@ chat> what pages does this website link to?
 - **https://github.com/mikeizbicki/cmc-csci040** (CSCI040 course webpage)
 - **https://izbicki.me/** (Mike Izbicki's personal webpage)
 - **https://sophia09zheng13.github.io/** (Sophia's webpage)
+```
+
+## Agent Examples
+
+The examples below demonstrate the agent's ability to create, modify, and delete files, with all changes automatically committed to git.
+
+### Creating a file
+
+The session below shows the agent creating a new Python file and automatically committing it to git.
+
+```bash
+$ ls -a
+.git  AGENTS.md  README.md  chat.py  tools/
+$ git log --oneline
+c21103f (HEAD -> project4) init commit
+$ chat
+chat> create a python file called hello.py that prints "hello world"
+Created hello.py with a simple hello world program.
+chat> ^C
+$ ls -a
+.git  AGENTS.md  README.md  chat.py  hello.py  tools/
+$ git log --oneline
+3cfb0a6 (HEAD -> project4) [docchat] create hello world python file
+c21103f init commit
+```
+
+### Modifying a file
+
+The session below shows the agent modifying an existing file and committing the change.
+
+```bash
+$ chat
+chat> update hello.py to also print "goodbye world"
+Updated hello.py to print both hello world and goodbye world.
+chat> ^C
+$ cat hello.py
+print("hello world")
+print("goodbye world")
+$ git log --oneline
+7a3b2c1 (HEAD -> project4) [docchat] update hello.py
+3cfb0a6 [docchat] create hello world python file
+c21103f init commit
+```
+
+### Deleting a file
+
+The session below shows the agent deleting a file and committing the deletion.
+
+```bash
+$ chat
+chat> delete hello.py
+Deleted hello.py and committed the change.
+chat> ^C
+$ ls -a
+.git  AGENTS.md  README.md  chat.py  tools/
+$ git log --oneline
+9d4e5f2 (HEAD -> project4) [docchat] rm hello.py
+7a3b2c1 [docchat] update hello.py
+3cfb0a6 [docchat] create hello world python file
+c21103f init commit
 ```

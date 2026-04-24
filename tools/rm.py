@@ -14,9 +14,9 @@ def rm(path):
     >>> _ = write_file('test_files/to_delete.txt', 'bye', 'add delete test file')
     >>> rm('test_files/to_delete.txt')
     'Deleted and committed: test_files/to_delete.txt'
-    >>> import os
-    >>> os.path.exists('test_files/to_delete.txt')
-    False
+    >>> from tools.cat import cat
+    >>> cat('test_files/to_delete.txt')
+    'Error: file not found'
     >>> rm('/etc/passwd')
     'Error: unsafe path'
     >>> rm('../secret')
