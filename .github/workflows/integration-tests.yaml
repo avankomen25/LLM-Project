@@ -59,8 +59,7 @@ jobs:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: |
           chat <<'EOF'
-          create a file called test_files/integration_test.txt with the contents "hello"
-          what does test_files/integration_test.txt contain?
+          please write the text "hello" to the file test_files/integration_test.txt and commit it
           EOF
 
       - name: Test doctests tool
