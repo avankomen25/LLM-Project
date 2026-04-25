@@ -53,3 +53,21 @@ jobs:
           /grep import *.py
           what libraries does this project use?
           EOF
+
+      - name: Test write_file tool
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: |
+          chat <<'EOF'
+          /write_file test_files/integration_test.txt hello integration test
+          what does test_files/integration_test.txt contain?
+          EOF
+
+      - name: Test doctests tool
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: |
+          chat <<'EOF'
+          /doctests tools/utils.py
+          did the tests pass?
+          EOF
