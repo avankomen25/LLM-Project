@@ -114,3 +114,13 @@ fbb4b27 (HEAD -> project4) [docchat] rm hello.py
 1300693 [docchat] Add goodbye world print
 2ca9828 [docchat] Add hello.py that prints hello world
 ```
+
+### Running doctests with the agent
+
+The session below shows the agent running doctests on a file and reporting the results.
+
+```bash
+$ chat
+chat> run the doctests on tools/utils.py
+All doctests in `tools/utils.py` passed successfully.
+```
