@@ -6,7 +6,7 @@
 [![codecov](https://codecov.io/github/avankomen25/LLM-Project/graph/badge.svg?token=K97YWXIYUX)](https://codecov.io/github/avankomen25/LLM-Project)
 [![PyPI](https://img.shields.io/pypi/v/cmc-csci040-andrewvankomen)](https://pypi.org/project/cmc-csci040-andrewvankomen/)
 
-A command-line AI chat tool that lets you have conversations with your codebase. Point it at any project and ask questions. It can read files, search for patterns, list directories, and write files automatically.
+A command-line AI chat tool that lets you have conversations with your codebase. Point it at any project and ask questions. It can read files, search for patterns, list directories, run doctests, write and delete files automatically.
 
 ![Demo](https://raw.githubusercontent.com/avankomen25/LLM-Project/master/llmdemo.gif)
 
@@ -62,6 +62,36 @@ chat> what pages does this website link to?
 - **https://sophia09zheng13.github.io/** (Sophia's webpage)
 ```
 
+### Running doctests with the agent
+
+The session below shows the agent running doctests on a file and reporting the results.
+
+```bash
+$ chat
+chat> run the doctests on tools/utils.py
+All doctests in `tools/utils.py` passed successfully.
+```
+
+### Multiple providers
+
+You can specify which LLM provider to use with the `--provider` flag.
+
+```bash
+$ chat --provider anthropic
+chat> what does this project do?
+This is an AI agent that can read, write, and delete files in your codebase.
+```
+
+### Single message mode
+
+You can pass a message directly as a command line argument without entering the REPL.
+
+```bash
+$ chat 'what files are in the .github folder?'
+The only file in this folder is the workflows subfolder.
+```
+
+
 ## Agent Examples
 
 The examples below demonstrate the agent's ability to create, modify, and delete files, with all changes automatically committed to git.
@@ -115,12 +145,3 @@ fbb4b27 (HEAD -> project4) [docchat] rm hello.py
 2ca9828 [docchat] Add hello.py that prints hello world
 ```
 
-### Running doctests with the agent
-
-The session below shows the agent running doctests on a file and reporting the results.
-
-```bash
-$ chat
-chat> run the doctests on tools/utils.py
-All doctests in `tools/utils.py` passed successfully.
-```

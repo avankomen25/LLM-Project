@@ -209,8 +209,13 @@ def main():
     """Entry point for the chat CLI."""
     parser = argparse.ArgumentParser()
     parser.add_argument('--provider', default='groq', choices=PROVIDER_MODELS.keys())
+    parser.add_argument('message', nargs='?', default=None)
     args = parser.parse_args()
-    repl(provider=args.provider)
+    if args.message:
+        chat = Chat(provider=args.provider)
+        print(chat.send_message(args.message))
+    else:
+        repl(provider=args.provider)
 
 
 if __name__ == '__main__':
