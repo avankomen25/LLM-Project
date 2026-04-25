@@ -10,6 +10,8 @@ def rm(path):
     '''
     Delete files matching a glob pattern and commit the deletion to git.
 
+    Doctest here uses write_file to make a file, then tests the rm function to see if it is removed using the cat tool
+
     >>> from tools.write_file import write_file
     >>> _ = write_file('test_files/to_delete.txt', 'bye', 'add delete test file')
     >>> rm('test_files/to_delete.txt')

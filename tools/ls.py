@@ -23,6 +23,8 @@ def ls(path='.'):
     utils.py
     write_file.py
     write_files.py
+    >>> ls('../secret')
+    'Error: unsafe path'
     """
     if not is_path_safe(path):
         return 'Error: unsafe path'

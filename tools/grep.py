@@ -18,6 +18,8 @@ def grep(pattern, path):
     'Error: unsafe path'
     >>> grep('hello', 'llmdemo.gif')
     ''
+    >>> grep('hello', '../secret')
+    'Error: unsafe path'
     """
     if not is_path_safe(path):
         return 'Error: unsafe path'

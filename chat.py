@@ -5,7 +5,7 @@ import json
 import argparse
 
 from groq import Groq
-from openai import OpenAI  # I couldn't get the provder tag to  work through Groq
+from openai import OpenAI  # I couldn't get the provder tag to work through Groq
 from dotenv import load_dotenv
 
 from tools.calculate import calculate, tool_definition as calculate_def
@@ -44,10 +44,20 @@ class Chat:
     A chat interface that uses the Groq API with support for tool use.
 
     Supports automatic tool calling via the LLM and manual slash commands.
+    I have to check for just the name in the response because the output is non-deterministic
 
     >>> chat = Chat()
-    >>> chat.send_message('Hello!', temperature=0.0)  # doctest: +ELLIPSIS
-    'Hello! How can I help you with your code today?'
+    >>> response = chat.send_message('my name is Bob. Please remember this.', temperature=0.0)
+    >>> response = chat.send_message('what is my name? Answer with just the name.', temperature=0.0)
+    >>> 'Bob' in response
+    True
+
+    The response should not include the name 'Bob' if the conversation has not mentioned the name.
+
+    >>> chat2 = Chat()
+    >>> response = chat2.send_message('what is my name?', temperature=0.0)
+    >>> 'bob' in response.lower()
+    False
     '''
 
     def __init__(self, provider='groq'):
@@ -151,6 +161,8 @@ def run_slash_command(chat, user_input):
 
 def repl(temperature=0.8, provider='groq'):
     """Run the interactive chat REPL, supporting both messages and slash commands.
+
+    The repl accepts user input and prints the model's response.
 
     >>> def monkey_input(prompt, user_inputs=['Hello, I am monkey.', 'Goodbye.']):
     ...     try:

@@ -9,6 +9,7 @@ dependencies = [
     "groq",
     "python-dotenv",
     "gitpython",
+    "openai",
 ]
 readme = "README.md"
 

@@ -8,11 +8,8 @@ def doctests(path):
     '''
     Run doctests on a file and return the output.
 
-    >>> result = doctests('tools/utils.py')
-    >>> 'ok' in result or 'passed' in result or 'items' in result
-    True
-
-    Does not support absolute paths or directory traversal.
+    >>> doctests('tools/utils.py').strip().split('\\n')[-3]
+    'tools/utils.py::tools.utils.is_path_safe PASSED                          [100%]'
     >>> doctests('/etc/passwd')
     'Error: unsafe path'
     >>> doctests('../secret')
