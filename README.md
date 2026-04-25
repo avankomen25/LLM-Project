@@ -6,7 +6,7 @@
 [![codecov](https://codecov.io/github/avankomen25/LLM-Project/branch/project4/graph/badge.svg?token=K97YWXIYUX)](https://codecov.io/github/avankomen25/LLM-Project)
 [![PyPI](https://img.shields.io/pypi/v/cmc-csci040-andrewvankomen)](https://pypi.org/project/cmc-csci040-andrewvankomen/)
 
-A command-line AI chat tool that lets you have conversations with your codebase. Point it at any project and ask questions. It can read files, search for patterns, list directories, run doctests, write and delete files automatically.
+A command-line AI chat tool that lets you have conversations with your codebase. Point it at any project and ask questions. It can read files, search for patterns, list directories, run doctests, and write and delete files automatically.
 
 ![Demo](https://raw.githubusercontent.com/avankomen25/LLM-Project/master/llmdemo.gif)
 
