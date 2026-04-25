@@ -59,7 +59,7 @@ jobs:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: |
           chat <<'EOF'
-          /write_file test_files/integration_test.txt hello integration test
+          create a file called test_files/integration_test.txt with the contents "hello"
           what does test_files/integration_test.txt contain?
           EOF
 
