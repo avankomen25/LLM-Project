@@ -64,8 +64,6 @@ chat> what pages does this website link to?
 
 ## Agent Examples
 
-## Agent Examples
-
 The examples below demonstrate the agent's ability to create, modify, and delete files, with all changes automatically committed to git.
 
 ### Creating a file
