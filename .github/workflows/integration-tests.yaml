@@ -61,6 +61,18 @@ jobs:
           chat <<'EOF'
           please write the text "hello" to the file test_files/integration_test.txt and commit it
           EOF
+          git log --oneline -1 | grep '\[docchat\]'
+          cat test_files/integration_test.txt | grep 'hello'
+
+      - name: Test rm tool
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: |
+          chat <<'EOF'
+          please delete the file test_files/integration_test.txt and commit it
+          EOF
+          git log --oneline -1 | grep '\[docchat\]'
+          test ! -f test_files/integration_test.txt
 
       - name: Test doctests tool
         env:
