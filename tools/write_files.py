@@ -7,10 +7,12 @@ def write_files(files, commit_message):
     '''
     Write multiple files and commit them to git.
 
-    >>> write_files({'path': 'test_files/test_write.txt', 'contents': 'hello'}, 'test')
-    'Files written and committed: test_files/test_write.txt'
-    >>> write_files([{'path': 'test_files/test_write.txt', 'contents': 'hello'}], 'test')
-    'Files written and committed: test_files/test_write.txt'
+    >>> write_files({'path': 'test_files/test_write2.txt', 'contents': 'hello'}, 'test')
+    'Files written and committed: test_files/test_write2.txt'
+    >>> write_files([{'path': 'test_files/test_write2.txt', 'contents': 'hello'}], 'test')
+    'Files written and committed: test_files/test_write2.txt'
+    >>> cat('test_files/test_write2.txt')
+    'hello'
     >>> write_files([{'path': '/etc/passwd', 'contents': 'bad'}], 'hack')
     'Error: unsafe path: /etc/passwd'
     >>> write_files([{'path': '../secret', 'contents': 'bad'}], 'hack')

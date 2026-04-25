@@ -162,9 +162,9 @@ def run_slash_command(chat, user_input):
 def repl(temperature=0.8, provider='groq'):
     """Run the interactive chat REPL, supporting both messages and slash commands.
 
-    The repl accepts user input and prints the model's response.
+    The repl accepts user input, handles slash commands directly, and prints the model's response.
 
-    >>> def monkey_input(prompt, user_inputs=['Hello, I am monkey.', 'Goodbye.']):
+    >>> def monkey_input(prompt, user_inputs=['/ls .github', 'Goodbye.']):
     ...     try:
     ...         user_input = user_inputs.pop(0)
     ...         print(f'{prompt}{user_input}')
@@ -174,8 +174,8 @@ def repl(temperature=0.8, provider='groq'):
     >>> import builtins
     >>> builtins.input = monkey_input
     >>> repl(temperature=0.0)  # doctest: +ELLIPSIS
-    chat> Hello, I am monkey.
-    ...
+    chat> /ls .github
+    workflows
     chat> Goodbye.
     ...
     <BLANKLINE>
