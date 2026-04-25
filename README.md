@@ -64,6 +64,8 @@ chat> what pages does this website link to?
 
 ## Agent Examples
 
+## Agent Examples
+
 The examples below demonstrate the agent's ability to create, modify, and delete files, with all changes automatically committed to git.
 
 ### Creating a file
@@ -71,19 +73,15 @@ The examples below demonstrate the agent's ability to create, modify, and delete
 The session below shows the agent creating a new Python file and automatically committing it to git.
 
 ```bash
-$ ls -a
-.git  AGENTS.md  README.md  chat.py  tools/
-$ git log --oneline
-c21103f (HEAD -> project4) init commit
 $ chat
 chat> create a python file called hello.py that prints "hello world"
-Created hello.py with a simple hello world program.
-chat> ^C
-$ ls -a
-.git  AGENTS.md  README.md  chat.py  hello.py  tools/
-$ git log --oneline
-3cfb0a6 (HEAD -> project4) [docchat] create hello world python file
-c21103f init commit
+File `hello.py` has been created and prints "hello world".
+$ ls
+chat.py  hello.py  README.md  tools/  test_files/  ...
+$ git log --oneline -3
+2ca9828 (HEAD -> project4) [docchat] Add hello.py that prints hello world
+77aba2f finalize project4
+d440d0c [docchat] test
 ```
 
 ### Modifying a file
@@ -93,15 +91,14 @@ The session below shows the agent modifying an existing file and committing the 
 ```bash
 $ chat
 chat> update hello.py to also print "goodbye world"
-Updated hello.py to print both hello world and goodbye world.
-chat> ^C
+hello.py now prints both "hello world" and "goodbye world".
 $ cat hello.py
 print("hello world")
 print("goodbye world")
-$ git log --oneline
-7a3b2c1 (HEAD -> project4) [docchat] update hello.py
-3cfb0a6 [docchat] create hello world python file
-c21103f init commit
+$ git log --oneline -3
+1300693 (HEAD -> project4) [docchat] Add goodbye world print
+2ca9828 [docchat] Add hello.py that prints hello world
+77aba2f finalize project4
 ```
 
 ### Deleting a file
@@ -111,13 +108,11 @@ The session below shows the agent deleting a file and committing the deletion.
 ```bash
 $ chat
 chat> delete hello.py
-Deleted hello.py and committed the change.
-chat> ^C
-$ ls -a
-.git  AGENTS.md  README.md  chat.py  tools/
-$ git log --oneline
-9d4e5f2 (HEAD -> project4) [docchat] rm hello.py
-7a3b2c1 [docchat] update hello.py
-3cfb0a6 [docchat] create hello world python file
-c21103f init commit
+File `hello.py` has been deleted.
+$ ls
+chat.py  README.md  tools/  test_files/  ...
+$ git log --oneline -3
+fbb4b27 (HEAD -> project4) [docchat] rm hello.py
+1300693 [docchat] Add goodbye world print
+2ca9828 [docchat] Add hello.py that prints hello world
 ```
